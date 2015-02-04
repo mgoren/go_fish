@@ -18,15 +18,17 @@ class Player < ActiveRecord::Base
 
   def score_double(fish)
     hand = self.cards
-    new_score = self.score + 1
-    self.update(score: new_score)
-    hand.each do |card|
-      if card.fish == fish
-        hand.delete(card)
+    selected_cards = hand.select {|card| card.fish == fish}
+    if selected_cards.length == 2
+      new_score = self.score + 1
+      self.update(score: new_score)
+      hand.each do |card|
+        if card.fish == fish
+          hand.delete(card)
+        end
       end
+      # self.cards.where(fish: detected).delete
     end
-    # self.cards.where(fish: detected).delete
-
   end
 
   def get_card (number)

@@ -40,18 +40,14 @@ get "/player/:player_num" do
   erb(:player)
 end
 
-post "/check_doubles" do
+get "/score_double/:fish" do
   @game = Game.first
   player = Player.find(@game.player_id)
-  num = player.player_num
-  dupe_fish = player.check_doubles
-  if dupe_fish
-    player.score_double(dupe_fish)
-  end
+  player.score_double(params['fish'])
   if @game.gameover
     erb(:score)
   else
-    redirect("/player/#{num}")
+    redirect("/player/#{player.player_num}")
   end
 end
 
@@ -59,14 +55,17 @@ post "/ask" do
   @game = Game.first
   @player = Player.find(@game.player_id)
   original_cards = @player.cards.length
-  opp = Player.find(params['opponent'])
+  opp_id = params['opponent']
   fish = params['card']
-  @player.ask_for(opp, fish)
-  new_cards = @player.cards.length
-  if new_cards > original_cards
-    @success = true
-  else
-    @player.update(fail_ask: true)
+  if opp_id != nil && fish != nil
+    opp = Player.find(opp_id)
+    @player.ask_for(opp, fish)
+    new_cards = @player.cards.length
+    if new_cards > original_cards
+      @success = true
+    else
+      @player.update(fail_ask: true)
+    end
   end
   erb(:player)
 end
@@ -81,5 +80,6 @@ post "/go_fish" do
 end
 
 get "/reset" do
+  @game = Game.first
   erb(:oil_spill)
 end

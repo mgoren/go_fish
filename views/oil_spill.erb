@@ -1,7 +1,11 @@
-<div class="scared_fish">
-  <div class="oil_spill">
+<% if ! @game.gameover %>
+  <div class="scared_fish">
+    <div class="oil_spill">
+    </div>
   </div>
-</div>
-<p>You killed all the fishies! In an oil spill! :(</p>
-
-<a class="btn btn-info" href="/">Click to play again</a>
+  <p>You killed all the fishies! In an oil spill! :(</p>
+  <a class="btn btn-info" href="/">Click to play again</a>
+<% else %>
+  <meta http-equiv="refresh" content="0; url=/" />
+  <a class="btn btn-info" href="/">Click to play again</a>
+<% end %>

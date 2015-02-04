@@ -1,13 +1,11 @@
-<h2> <%= @player.name %>'s Turn!</h2>
+<h2> <%= @player.name %>'s Turn</h2>
 
 <section class="ctr" id="pair">
-  <% if @player.check_doubles != nil %>
-    <form action="/check_doubles" method="post">
-      <button type="submit" class="btn btn-success">Pair!</button>
-    </form>
-    <% if @success %>
-      You got a card! Click above to add your pair to your score, then ask again!
-    <% end %>
+
+  <% if @success %>
+    You got a card! Click it to add your pair to your score, then ask again!
+  <% elsif @player.check_doubles != nil %>
+    You have a pair! Click one of the cards to add your pair to your score.
   <% end %>
 </section>
 
@@ -25,17 +23,28 @@
 <section class="ctr" id="ask">
   <form action="/ask" method="post">
     <select name="card">
+      <option value='' disabled selected style='display:none'>Choose card to request</option>
       <% @player.cards.alphabetize.each do |card| %>
         <option value="<%= card.fish %>"><%= card.fish %></option>
       <% end %>
     </select>
-    <select name="opponent">
+    <% if Player.all.length > 2 %>
+      <select name="opponent">
+        <option value='' disabled selected style='display:none'>Choose player to ask</option>
+        <% @game.players.each do |player| %>
+          <% if player != @player %>
+            <option value="<%= player.id %>"><%= player.name %></option>
+          <% end %>
+        <% end %>
+      </select>
+    <% else %>
       <% @game.players.each do |player| %>
         <% if player != @player %>
-          <option value="<%= player.id %>"><%= player.name %></option>
+          <input type="hidden" name="opponent" value="<%= player.id %>">
         <% end %>
-      <% end %>
-    </select><br>
+      <% end %>      
+    <% end %>
+    <br>
     <button type="submit" class="btn btn-custom">Ask Opponent for a Card</button>
   </form>
 </section>
@@ -45,12 +54,12 @@
 <div class="cards">
   <ul>
     <% @player.cards.alphabetize.each do |card| %>
-        <!-- <li><%= card.fish %> <br> <img src="/img/<%= card.fish %>.jpg"></li> -->
-        <figure>
-          <img src="/img/<%= card.fish %>.jpg">
-          <figcaption><%= card.fish %></figcaption>
-        </figure>
-
+        <a href="/score_double/<%= card.fish %>">
+          <figure>
+            <img src="/img/<%= card.fish %>.jpg">
+            <figcaption><%= card.fish %></figcaption>
+          </figure>
+        </a>
     <% end %>
   </ul>
 </div>
