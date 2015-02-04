@@ -3,6 +3,7 @@ class Player < ActiveRecord::Base
   has_and_belongs_to_many :cards
   belongs_to :game
   validates_presence_of :name
+  before_save :capitalize_name
 
   default_scope {order('player_num')}
 
@@ -24,7 +25,6 @@ class Player < ActiveRecord::Base
       end
     end
     # self.cards.where(fish: detected).delete
-    # get_card(1)
   end
 
   def get_card (number)
@@ -44,6 +44,13 @@ class Player < ActiveRecord::Base
         opponent.cards.delete(card)
       end
     end
+  end
+
+
+  private
+
+  define_method(:capitalize_name) do
+    self.name=(name.split(/(\W)/).map(&:capitalize).join)
   end
 
 end

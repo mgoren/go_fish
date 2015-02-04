@@ -1,10 +1,15 @@
 <% next_player = Player.find(@game.player_id) %>
-<% @game.players.each do |playa| %>
-  <p><%= playa.name %>: <%= playa.score %></p>
-<% end %>
 
-<% if @game.gameover %>
-  <h2><%= @game.winner.name %> is the winner!</h2>
-<% else %>
-  <a class="btn btn-sm btn-success" href="/player/<%= next_player.player_num %>"><%= next_player.name %> Go!</a>
-<% end %>
+<section id="score">
+  <% @game.players.each do |playa| %>
+    <p><%= playa.name %>: <%= playa.score %></p>
+  <% end %>
+</section>
+
+<section id="gameover">
+  <% if @game.gameover %>
+    <h2><%= @game.winner.name %> is the winner!</h2>
+  <% else %>
+    <a class="btn btn-sm btn-success" href="/player/<%= next_player.player_num %>"><%= next_player.name %> Go!</a>
+  <% end %>
+</section>

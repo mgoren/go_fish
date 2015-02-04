@@ -18,6 +18,4 @@ class Card < ActiveRecord::Base
 
   scope(:alphabetize, -> { order(:fish) })
 
-  # default_scope {order('random()')}
-
 end
