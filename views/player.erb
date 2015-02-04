@@ -1,15 +1,15 @@
 <h2> <%= @player.name %>'s Turn!</h2>
 
 <form action="/check_doubles" method="post">
-  <button type="submit" class="btn">Pair!</button>
+  <button type="submit" class="btn btn-success">Pair!</button>
 </form>
-<br><br>
 <% if @success %>
-  You got a card! Click below to add your pair to your score, then ask again!
-
+  You got a card! Click above to add your pair to your score, then ask again!
 <% end %>
 
-<% if @fail %>
+<br><br>
+
+<% if @player.fail_ask %>
 
    <form action="/go_fish" method="post">
       <button type="submit" class="btn btn-info">GO FISH!</button>
@@ -38,10 +38,8 @@
 
 <div class="cards">
   <ul>
-     <% @player.cards.alphabetize.each do |card| %>
+    <% @player.cards.alphabetize.each do |card| %>
         <li><%= card.fish %> <br> <img src="/img/<%= card.fish %>.jpg"></li>
-     <% end %>
-   </ul>
+    <% end %>
+  </ul>
 </div>
-
-<br><br>

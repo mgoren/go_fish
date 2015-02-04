@@ -35,7 +35,7 @@ get "/player/:player_num" do
   @player = Player.find_by(player_num: params["player_num"])
   @game = Game.first
   if @player.cards.length == 0
-    @fail = true
+    @player.update(fail_ask: true)
   end
   erb(:player)
 end
@@ -45,7 +45,6 @@ post "/check_doubles" do
   player = Player.find(@game.player_id)
   num = player.player_num
   player.check_doubles
-
   if @game.gameover
     erb(:score)
   else
@@ -64,17 +63,16 @@ post "/ask" do
   if new_cards > original_cards
     @success = true
   else
-    @fail = true
+    @player.update(fail_ask: true)
   end
   erb(:player)
 end
 
 post "/go_fish" do
-  game = Game.first
-  player = Player.find(game.player_id)
-  num = player.player_num
-  player.get_card(1)
   @game = Game.first
+  player = Player.find(@game.player_id)
+  player.get_card(1)
+  player.update(fail_ask: false)
   @game.update_turn
   erb :score
 end
