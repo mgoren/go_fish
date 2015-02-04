@@ -44,7 +44,10 @@ post "/check_doubles" do
   @game = Game.first
   player = Player.find(@game.player_id)
   num = player.player_num
-  player.check_doubles
+  dupe_fish = player.check_doubles
+  if dupe_fish
+    player.score_double(dupe_fish)
+  end
   if @game.gameover
     erb(:score)
   else

@@ -36,14 +36,18 @@ ul {
   padding: 0;
 }
 
-.cards li {
-  display: inline;
-  float: left;
+.cards figure {
+  display: inline-block;
+  margin: 10px;
+}
+
+.cards figcaption {
+  text-align: center;
 }
 
 .container {
   background-color: #FFE4CC;
-  width: 50%;
+  width: 80%;
   margin: 1em auto;
   padding: 15px;
   border: 3px solid gray;
@@ -108,6 +112,34 @@ keyframes oil_spill {
   color: blue;
 }
 
+.btn-custom {
+  background-color: hsl(70, 11%, 23%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#7b7f66", endColorstr="#3e4134");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#7b7f66), to(#3e4134));
+  background-image: -moz-linear-gradient(top, #7b7f66, #3e4134);
+  background-image: -ms-linear-gradient(top, #7b7f66, #3e4134);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7b7f66), color-stop(100%, #3e4134));
+  background-image: -webkit-linear-gradient(top, #7b7f66, #3e4134);
+  background-image: -o-linear-gradient(top, #7b7f66, #3e4134);
+  background-image: linear-gradient(#7b7f66, #3e4134);
+  border-color: #3e4134 #3e4134 hsl(70, 11%, 17.5%);
+  color: #fff !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.36);
+  -webkit-font-smoothing: antialiased;
+}
+
+.ctr {
+  text-align: center;
+}
+
+#pair {
+  margin: 20px;
+}
+
+#ask {
+  margin: 20px;
+}
 
 /*.btn {
   display: inline;

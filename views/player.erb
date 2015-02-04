@@ -1,23 +1,28 @@
 <h2> <%= @player.name %>'s Turn!</h2>
 
-<form action="/check_doubles" method="post">
-  <button type="submit" class="btn btn-success">Pair!</button>
-</form>
-<% if @success %>
-  You got a card! Click above to add your pair to your score, then ask again!
-<% end %>
-
-<br><br>
+<section class="ctr" id="pair">
+  <% if @player.check_doubles != nil %>
+    <form action="/check_doubles" method="post">
+      <button type="submit" class="btn btn-success">Pair!</button>
+    </form>
+    <% if @success %>
+      You got a card! Click above to add your pair to your score, then ask again!
+    <% end %>
+  <% end %>
+</section>
 
 <% if @player.fail_ask %>
 
+<section class="ctr" id="gofish">
    <form action="/go_fish" method="post">
       <button type="submit" class="btn btn-info">GO FISH!</button>
     <br /><br /><br />
     </form>
+</section>
 
 <% else %>
 
+<section class="ctr" id="ask">
   <form action="/ask" method="post">
     <select name="card">
       <% @player.cards.alphabetize.each do |card| %>
@@ -27,19 +32,25 @@
     <select name="opponent">
       <% @game.players.each do |player| %>
         <% if player != @player %>
-          <option value="<%= player.id %>">Player <%= player.name %></option>
+          <option value="<%= player.id %>"><%= player.name %></option>
         <% end %>
       <% end %>
     </select><br>
-    <button type="submit" class="btn">Ask Opponent for a Card</button>
+    <button type="submit" class="btn btn-custom">Ask Opponent for a Card</button>
   </form>
+</section>
 
 <% end %>
 
 <div class="cards">
   <ul>
     <% @player.cards.alphabetize.each do |card| %>
-        <li><%= card.fish %> <br> <img src="/img/<%= card.fish %>.jpg"></li>
+        <!-- <li><%= card.fish %> <br> <img src="/img/<%= card.fish %>.jpg"></li> -->
+        <figure>
+          <img src="/img/<%= card.fish %>.jpg">
+          <figcaption><%= card.fish %></figcaption>
+        </figure>
+
     <% end %>
   </ul>
 </div>

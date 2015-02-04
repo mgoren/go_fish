@@ -7,24 +7,26 @@ class Player < ActiveRecord::Base
 
   default_scope {order('player_num')}
 
-
   def check_doubles
     hand = self.cards
     fishes = []
     hand.each do |card|
       fishes << card.fish
     end
-    detected = fishes.detect{|fish| fishes.count(fish) == 2}
-    if detected
-      new_score = self.score + 1
-      self.update(score: new_score)
-    end
-    self.cards.each do |card|
-      if card.fish == detected
+    fishes.detect{|fish| fishes.count(fish) == 2}
+  end
+
+  def score_double(fish)
+    hand = self.cards
+    new_score = self.score + 1
+    self.update(score: new_score)
+    hand.each do |card|
+      if card.fish == fish
         hand.delete(card)
       end
     end
     # self.cards.where(fish: detected).delete
+
   end
 
   def get_card (number)
