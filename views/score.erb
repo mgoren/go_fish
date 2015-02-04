@@ -10,6 +10,6 @@
   <% if @game.gameover %>
     <h2><%= @game.winner.name %> is the winner!</h2>
   <% else %>
-    <a class="btn btn-sm btn-success" href="/player/<%= next_player.player_num %>"><%= next_player.name %> Go!</a>
+    <a class="btn btn-sm btn-success" href="/player/<%= next_player.player_num %>"><i class="fa fa-rocket"></i> <%= next_player.name %> Go!</a>
   <% end %>
 </section>
