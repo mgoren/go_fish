@@ -18,7 +18,6 @@ class Game < ActiveRecord::Base
       total_score += player.score
     end
     if total_score == 11
-binding.pry
       return true
     else
       return false
