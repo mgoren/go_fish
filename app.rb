@@ -44,12 +44,16 @@ get "/player/:player_num" do
 end
 
 post "/check_doubles" do
-  game = Game.first
-  player = Player.find(game.player_id)
+  @game = Game.first
+  player = Player.find(@game.player_id)
   num = player.player_num
   player.check_doubles
 
-  redirect("/player/#{num}")
+  if @game.gameover
+    erb(:score)
+  else
+    redirect("/player/#{num}")
+  end
 end
 
 post "/ask" do
